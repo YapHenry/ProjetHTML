@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte</title>
+</head>
+<body>
+    <main style="max-width: 600px; margin: 0 auto; font-family: sans-serif;">
+    
+    <h1>Mon Compte</h1>
+    <p><a href="accueil_users.html">← Retour au tableau de bord</a></p>
+
+    <section style="background-color: #f0f4f8; padding: 15px; border-left: 5px solid #2980b9;">
+        <h2>Statut du compte</h2>
+        <p>
+            Vous êtes connecté en tant que : 
+            <strong style="font-size: 1.2em; color: #2980b9;">ÉTUDIANT</strong>
+        </p>
+        
+    </section>
+
+    <br>
+    <hr>
+    <br>
+
+    <section>
+        <h2>Mettre à jour mes coordonnées</h2>
+        <p>Remplissez les champs que vous souhaitez ajouter ou modifier.</p>
+
+        <form action="compte.html" method="">
+            
+            <fieldset>
+                <legend><strong>Contact Électronique</strong></legend>
+                
+                <label for="email">Adresse Email :</label><br>
+                <input type="email" id="email" name="email" placeholder="jean.dupont@etudiant.univ.fr" style="width: 100%; padding: 8px;">
+                <small>Ceci est votre adresse de contact principale.</small>
+                
+                <br><br>
+
+                <label for="phone">Numéro de téléphone :</label><br>
+                <input type="tel" id="phone" name="phone" placeholder="Ex: 06 12 34 56 78" pattern="[0-9]{10}" style="width: 100%; padding: 8px;">
+            </fieldset>
+
+            <br>
+
+            <fieldset>
+                <legend><strong>Adresse Postale</strong></legend>
+                <p><em>Permet l'envoi de documents en cas de besoin.</em></p>
+
+                <label for="adresse">Numéro et Rue :</label><br>
+                <input type="text" id="adresse" name="adresse" placeholder="10 rue de la République" style="width: 100%; padding: 8px;">
+                
+                <br><br>
+
+                <label for="cp">Code Postal :</label><br>
+                <input type="text" id="cp" name="cp" placeholder="75000" style="width: 100px; padding: 8px;">
+                
+                <br><br>
+
+                <label for="ville">Ville :</label><br>
+                <input type="text" id="ville" name="ville" placeholder="Paris" style="width: 100%; padding: 8px;">
+            </fieldset>
+
+            <br>
+
+            <div style="text-align: right;">
+                <button type="reset" style="padding: 10px 20px; background: #ddd; border: none; cursor: pointer;">Annuler</button>
+                <button type="submit" style="padding: 10px 20px; background: #27ae60; color: white; border: none; cursor: pointer; margin-left: 10px;">Enregistrer les modifications</button>
+            </div>
+
+        </form>
+    </section>
+</main>
+</body>
+</html>
