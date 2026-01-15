@@ -1,0 +1,52 @@
+-- 1. Création de la base de données
+CREATE DATABASE IF NOT EXISTS bibliotheque_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE bibliotheque_db;
+
+-- 2. Table des UTILISATEURS (Comprend les abonnés et les administrateurs)
+-- Note pour ton collaborateur : La colonne 'role' permet de gérer les droits d'accès.
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL, -- Le mot de passe doit être hashé (password_hash)
+    role ENUM('admin', 'member') DEFAULT 'member', -- 'admin' pour la gestion, 'member' pour les étudiants
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 3. Table des LIVRES
+CREATE TABLE IF NOT EXISTS books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    isbn VARCHAR(20) UNIQUE, -- Code unique du livre
+    category VARCHAR(50),
+    quantity INT DEFAULT 1, -- Nombre d'exemplaires disponibles
+    cover_image VARCHAR(255), -- Chemin vers l'image de couverture
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 4. Table des EMPRUNTS (Liaison entre Users et Books)
+CREATE TABLE IF NOT EXISTS loans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    book_id INT NOT NULL,
+    loan_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    due_date DATETIME NOT NULL, -- Date limite de retour
+    return_date DATETIME NULL, -- NULL tant que le livre n'est pas rendu
+    status ENUM('ongoing', 'returned', 'late') DEFAULT 'ongoing',
+    
+    -- Clés étrangères (Relations)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 5. Données de test (Pour que ton collaborateur ne parte pas de zéro)
+INSERT INTO users (first_name, last_name, email, password, role) VALUES 
+('Jean', 'Dupont', 'admin@biblio.com', '$2y$10$ExempleHashDeMotDePasse', 'admin'),
+('Alice', 'Martin', 'alice@etudiant.com', '$2y$10$ExempleHashDeMotDePasse', 'member');
+
+INSERT INTO books (title, author, category, quantity) VALUES 
+('Le Petit Prince', 'Antoine de Saint-Exupéry', 'Roman', 5),
+('Apprendre le PHP', 'John Doe', 'Informatique', 3);
